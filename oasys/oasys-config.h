@@ -122,7 +122,7 @@
 #define LIBDB_ENABLED 1
 
 /* whether expat is enabled */
-/* #undef LIBEXPAT_ENABLED */
+#define LIBEXPAT_ENABLED 1
 
 /* whether the mysql embedded server is enabled */
 /* #undef LIBMYSQLD_ENABLED */
@@ -155,10 +155,10 @@
 /* #undef OASYS_DEBUG_MEMORY_ENABLED */
 
 /* whether zlib support is enabled */
-/* #undef OASYS_ZLIB_ENABLED */
+#define OASYS_ZLIB_ENABLED 1
 
 /* whether zlib contains compressBound */
-/* #undef OASYS_ZLIB_HAS_COMPRESS_BOUND */
+#define OASYS_ZLIB_HAS_COMPRESS_BOUND 1
 
 /* Define to the address where bug reports for this package should be sent. */
 #define PACKAGE_BUGREPORT ""

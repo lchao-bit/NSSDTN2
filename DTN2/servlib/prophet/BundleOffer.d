@@ -1,8 +1,8 @@
 prophet/BundleOffer.o prophet/BundleOffer.E: prophet/BundleOffer.cc \
  prophet/BundleOffer.h prophet/Bundle.h prophet/BundleList.h \
  prophet/AckList.h prophet/Ack.h \
- /home/dtn2/dtn2/DTN2/oasys/include/oasys/oasys-config.h \
- /home/dtn2/dtn2/DTN2/oasys/include/oasys/compat/inttypes.h \
+ /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/oasys-config.h \
+ /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/compat/inttypes.h \
  prophet/PointerList.h prophet/BundleTLVEntryList.h \
  prophet/BundleTLVEntry.h prophet/Dictionary.h prophet/Util.h \
  prophet/BundleCore.h prophet/Alarm.h prophet/Node.h prophet/BundleImpl.h \
@@ -19,9 +19,9 @@ prophet/AckList.h:
 
 prophet/Ack.h:
 
-/home/dtn2/dtn2/DTN2/oasys/include/oasys/oasys-config.h:
+/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/oasys-config.h:
 
-/home/dtn2/dtn2/DTN2/oasys/include/oasys/compat/inttypes.h:
+/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/compat/inttypes.h:
 
 prophet/PointerList.h:
 

@@ -2846,6 +2846,20 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
     				(char*)bpq_block->query_val());
             event->daemon_only_ = true;
         }
+       //---------------------------------------------------------------
+        else {
+        	u_int reqnamelen = bpq_block->query_len();
+                u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+                reqnameval = bpq_block->query_val();
+                char publcomm[200];
+                publcomm[0] = '\0';
+                strcat(publcomm, "/home/dtn2/publ.py ");
+                strcat(publcomm, (char*)reqnameval);
+                strcat(publcomm, " &");
+                system(publcomm);
+        }
+       //---------------------------------------------------------------
+         
 
     } else if (bpq_block->kind() == BPQBlock::KIND_RESPONSE ||
                bpq_block->kind() == BPQBlock::KIND_PUBLISH) {
@@ -2875,8 +2889,89 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
 			    	 generate_status_report(bundle, BundleStatusReport::STATUS_RECEIVED,
 			                                BundleProtocol::REASON_NO_ADDTL_INFO);
 			    }
-    		}
+    		
+                oasys::ScopeLock laq(pending_bundles_->lock(), 
+                       "Answer query already existed");
+                log_warn("before iter checking");
+                BundleList::iterator iter;
+                Bundle* matchable[200];
+                int macont = 0;
+		for (iter = pending_bundles_->begin();
+         		iter != pending_bundles_->end();
+         		++iter)
+		{
+   			log_warn("in iter checking");
+                        Bundle* ck = *iter;
+                        const BlockInfo* bk = NULL;
+                        if (ck->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+   			{
+      				log_warn("in condition checking");
+                                bk = ck->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  			BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bk->locals());
+                                log_warn("before query checking %d %d", ck->bundleid(), bpqbk->kind());
+	  			if(bpqbk->kind() == BPQBlock::KIND_QUERY)
+	  			{
+					matchable[macont++] = ck;
+                                        log_warn("current answering query %d %d", ck->bundleid(), bpqbk->kind());
+                                        //bpq_cache()->answer_query(ck, bpqbk);
+                                        log_warn("current answered query %d %d", ck->bundleid(), bpqbk->kind());
+                                        
+	  			}
+			}
+                        else if(ck->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+                        {
+                                log_warn("in condition checking");
+                                bk = ck->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  			BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bk->locals());
+                                log_warn("before query checking %d %d", ck->bundleid(), bpqbk->kind());
+	  			if(bpqbk->kind() == BPQBlock::KIND_QUERY)
+	  			{
+					matchable[macont++] = ck;
+                                        log_warn("current answering query %d %d", ck->bundleid(), bpqbk->kind());
+                                        //bpq_cache()->answer_query(ck, bpqbk);
+                                        log_warn("current answered query %d %d", ck->bundleid(), bpqbk->kind());
+				}
+                        }
+	  		else
+	  		{
+	     			continue;
+	  		}
+   		}
+                
+                for (int uu=0; uu<macont; uu++) {
+                   Bundle* at = matchable[uu];
+                   if (at->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+   			{
+			        const BlockInfo* bkt = NULL;
+                                bkt = at->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  			BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
+                        	bpq_cache()->answer_query(at, bpqbkt);
+                                BundleRef back(at, "query already acknowledged");
+                                delete_bundle(back);
+                                
+                                
+                                        
+			}
+                        else if(at->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+                        {
+                                const BlockInfo* bkt = NULL;
+                                bkt = at->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  			BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
+                                bpq_cache()->answer_query(at, bpqbkt);
+                                BundleRef back(at, "query already acknowledged");
+                                delete_bundle(back);
+                        }
+                }
+                laq.unlock();
+
+
+                }
+                //------------------------------------------------------------------
+                
+                //------------------------------------------------------------------
     	}
+        
+        
 
     } else if (bpq_block->kind() == BPQBlock::KIND_RESPONSE_DO_NOT_CACHE_FRAG) {
     	// don't accept local responses

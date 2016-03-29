@@ -5,7 +5,7 @@
 /* #undef BBN_IPND_ENABLED */
 
 /* whether Bundle Protocol Query Extension support is enabled */
-/* #undef BPQ_ENABLED */
+#define BPQ_ENABLED 1
 
 /* whether Bundle Security Protocol support is enabled */
 /* #undef BSP_ENABLED */

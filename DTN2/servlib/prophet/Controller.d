@@ -1,7 +1,7 @@
 prophet/Controller.o prophet/Controller.E: prophet/Controller.cc \
  prophet/Controller.h prophet/Link.h prophet/AckList.h prophet/Ack.h \
- /home/dtn2/dtn2/DTN2/oasys/include/oasys/oasys-config.h \
- /home/dtn2/dtn2/DTN2/oasys/include/oasys/compat/inttypes.h \
+ /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/oasys-config.h \
+ /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/compat/inttypes.h \
  prophet/Bundle.h prophet/PointerList.h prophet/Alarm.h prophet/Oracle.h \
  prophet/Params.h prophet/Node.h prophet/FwdStrategy.h prophet/Table.h \
  prophet/Util.h prophet/BundleCore.h prophet/BundleImpl.h \
@@ -18,9 +18,9 @@ prophet/AckList.h:
 
 prophet/Ack.h:
 
-/home/dtn2/dtn2/DTN2/oasys/include/oasys/oasys-config.h:
+/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/oasys-config.h:
 
-/home/dtn2/dtn2/DTN2/oasys/include/oasys/compat/inttypes.h:
+/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/compat/inttypes.h:
 
 prophet/Bundle.h:
 

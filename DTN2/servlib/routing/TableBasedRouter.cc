@@ -462,6 +462,27 @@ TableBasedRouter::should_fwd(const Bundle* bundle, RouteEntry* route)
             return false;
         }
     }
+    const BlockInfo* bkinfo = NULL;
+    if (bundle->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+    	bkinfo = bundle->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bkinfo->locals());
+	if(bpqbk->kind() == BPQBlock::KIND_PUBLISH)
+	{
+		return false;
+	}
+    }
+    else if(bundle->api_blocks_c()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+         bkinfo = bundle->api_blocks_c()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	 BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bkinfo->locals());
+	 if(bpqbk->kind() == BPQBlock::KIND_PUBLISH)
+	 {
+		return false;    
+	 }
+    }    
+
+
 
     return BundleRouter::should_fwd(bundle, route->link(), route->action());
 }

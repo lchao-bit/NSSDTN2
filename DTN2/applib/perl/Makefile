@@ -6,7 +6,7 @@
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
 #
-#   MakeMaker ARGV: (q[CC=g++], q[LD=g++], q[CCFLAGS=-g], q[-fno-inline], q[-fPIC], q[-DPIC], q[-MMD], q[-MP], q[-MT], q[perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E], q[-DHAVE_CONFIG_H], q[-D_LARGEFILE_SOURCE], q[-D_FILE_OFFSET_BITS=64], q[-I..], q[-I..], q[-I/home/dtn2/dtn2/DTN2/oasys/include], q[-I/home/dtn2/dtn2/DTN2/oasys/include/oasys/ext], q[-I../servlib], q[-I/opt/tcl/include], q[-I/opt/db/include], q[-Wall], q[-W], q[-Wcast-align], q[VERSION=2.9.0])
+#   MakeMaker ARGV: (q[CC=g++], q[LD=g++], q[CCFLAGS=-g], q[-fno-inline], q[-fPIC], q[-DPIC], q[-MMD], q[-MP], q[-MT], q[perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E], q[-DHAVE_CONFIG_H], q[-D_LARGEFILE_SOURCE], q[-D_FILE_OFFSET_BITS=64], q[-I..], q[-I..], q[-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include], q[-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext], q[-I../servlib], q[-I/opt/tcl/include], q[-I/opt/db/include], q[-Wall], q[-W], q[-Wcast-align], q[VERSION=2.9.0])
 #
 
 #   MakeMaker Parameters:
@@ -14,7 +14,7 @@
 #     BUILD_REQUIRES => {  }
 #     CONFIGURE_REQUIRES => {  }
 #     FIRST_MAKEFILE => q[Makefile]
-#     INC => q[-I ../../ -I /home/dtn2/dtn2/DTN2/oasys/include]
+#     INC => q[-I ../../ -I /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include]
 #     LIBS => [q[-L.. -ldtnapi]]
 #     NAME => q[dtnapi]
 #     OBJECT => q[dtn_api_wrap_perl.o]
@@ -151,7 +151,7 @@ BASEEXT = dtnapi
 PARENT_NAME = 
 DLBASE = $(BASEEXT)
 VERSION_FROM = 
-INC = -I ../../ -I /home/dtn2/dtn2/DTN2/oasys/include
+INC = -I ../../ -I /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include
 OBJECT = dtn_api_wrap_perl$(OBJ_EXT)
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -290,8 +290,8 @@ MPOLLUTE =
 # dtnapi might depend on some other libraries:
 # See ExtUtils::Liblist for details
 #
-EXTRALIBS = -L/home/dtn2/dtn2/DTN2/applib/perl/.. -ldtnapi
-LDLOADLIBS = -L/home/dtn2/dtn2/DTN2/applib/perl/.. -ldtnapi
+EXTRALIBS = -L/home/dtn2/dtn2/NSSDTN2/DTN2/applib/perl/.. -ldtnapi
+LDLOADLIBS = -L/home/dtn2/dtn2/NSSDTN2/DTN2/applib/perl/.. -ldtnapi
 BSLOADLIBS = 
 
 
@@ -532,22 +532,22 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  mon.out $(INST_ARCHAUTODIR)/extralibs.ld \
-	  core.*perl.*.? *perl.core \
-	  pm_to_blib $(BASEEXT).x \
-	  MYMETA.json $(BASEEXT).exp \
-	  perl core.[0-9] \
-	  *$(LIB_EXT) perl.exe \
-	  so_locations perlmain.c \
-	  tmon.out core.[0-9][0-9][0-9][0-9] \
-	  MYMETA.yml core.[0-9][0-9][0-9][0-9][0-9] \
-	  pm_to_blib.ts $(BOOTSTRAP) \
-	  core.[0-9][0-9][0-9] blibdirs.ts \
-	  $(BASEEXT).def $(MAKE_APERL_FILE) \
-	  lib$(BASEEXT).def core.[0-9][0-9] \
-	  *$(OBJ_EXT) core \
-	  $(BASEEXT).bso perl$(EXE_EXT) \
-	  $(INST_ARCHAUTODIR)/extralibs.all 
+	  $(BASEEXT).def perl.exe \
+	  perlmain.c MYMETA.json \
+	  $(INST_ARCHAUTODIR)/extralibs.all *$(OBJ_EXT) \
+	  $(BASEEXT).exp core.[0-9][0-9][0-9][0-9] \
+	  tmon.out $(MAKE_APERL_FILE) \
+	  pm_to_blib perl$(EXE_EXT) \
+	  core.[0-9][0-9] core.[0-9][0-9][0-9] \
+	  *$(LIB_EXT) mon.out \
+	  core.[0-9] core.[0-9][0-9][0-9][0-9][0-9] \
+	  $(BASEEXT).bso lib$(BASEEXT).def \
+	  $(BASEEXT).x core \
+	  pm_to_blib.ts $(INST_ARCHAUTODIR)/extralibs.ld \
+	  core.*perl.*.? blibdirs.ts \
+	  $(BOOTSTRAP) MYMETA.yml \
+	  *perl.core so_locations \
+	  perl 
 	- $(RM_RF) \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
@@ -562,8 +562,8 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(OBJECT) $(FIRST_MAKEFILE) \
-	  $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) \
+	  $(OBJECT) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -708,7 +708,7 @@ distdir : create_distdir distmeta
 
 # --- MakeMaker dist_test section:
 disttest : distdir
-	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/DTN2/oasys/include" "-I/home/dtn2/dtn2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
+	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include" "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
 	cd $(DISTVNAME) && $(MAKE) $(PASTHRU)
 	cd $(DISTVNAME) && $(MAKE) test $(PASTHRU)
 
@@ -927,7 +927,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 	-$(NOECHO) $(RM_F) $(MAKEFILE_OLD)
 	-$(NOECHO) $(MV)   $(FIRST_MAKEFILE) $(MAKEFILE_OLD)
 	- $(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) clean $(DEV_NULL)
-	$(PERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/DTN2/oasys/include" "-I/home/dtn2/dtn2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
+	$(PERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include" "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
 	$(NOECHO) $(ECHO) "==> Your Makefile has been rebuilt. <=="
 	$(NOECHO) $(ECHO) "==> Please rerun the $(MAKE) command.  <=="
 	$(FALSE)
@@ -964,8 +964,8 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 		-D_FILE_OFFSET_BITS=64 \
 		-I.. \
 		-I.. \
-		-I/home/dtn2/dtn2/DTN2/oasys/include \
-		-I/home/dtn2/dtn2/DTN2/oasys/include/oasys/ext \
+		-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include \
+		-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext \
 		-I../servlib \
 		-I/opt/tcl/include \
 		-I/opt/db/include \

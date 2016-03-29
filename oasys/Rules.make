@@ -28,9 +28,9 @@ srcdir		= .
 #
 # Oasys directory substitutions
 #
-OASYS_INCDIR   = /home/dtn2/dtn2/oasys
-OASYS_LIBDIR   = /home/dtn2/dtn2/oasys/lib
-OASYS_ETCDIR   = /home/dtn2/dtn2/oasys
+OASYS_INCDIR   = /home/dtn2/dtn2/NSSDTN2/oasys
+OASYS_LIBDIR   = /home/dtn2/dtn2/NSSDTN2/oasys/lib
+OASYS_ETCDIR   = /home/dtn2/dtn2/NSSDTN2/oasys
 OASYS_VERSION  = 1.6.0
 
 #
@@ -69,9 +69,9 @@ CXXFLAGS_NOWARN	= $(CFLAGS_NOWARN) $(EXTRA_CXXFLAGS)
 CXXFLAGS        = $(CFLAGS) $(EXTRA_CXXFLAGS)
 LDFLAGS         = -L. $(EXTRA_LDFLAGS)
 
-OASYS_LDFLAGS        = -L/home/dtn2/dtn2/oasys/lib -loasys-1.6.0
-OASYS_LDFLAGS_STATIC = /home/dtn2/dtn2/oasys/lib/liboasys-1.6.0.a
-OASYS_COMPAT_LDFLAGS = -L/home/dtn2/dtn2/oasys/lib -loasyscompat-1.6.0
+OASYS_LDFLAGS        = /home/dtn2/dtn2/NSSDTN2/oasys/lib/liboasys-1.6.0.a
+OASYS_LDFLAGS_STATIC = /home/dtn2/dtn2/NSSDTN2/oasys/lib/liboasys-1.6.0.a
+OASYS_COMPAT_LDFLAGS = /home/dtn2/dtn2/NSSDTN2/oasys/lib/liboasyscompat-1.6.0.a
 
 #
 # Add a phony rule to make sure this isn't included before the default
