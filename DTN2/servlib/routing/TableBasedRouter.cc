@@ -480,6 +480,10 @@ TableBasedRouter::should_fwd(const Bundle* bundle, RouteEntry* route)
 	 {
 		return false;    
 	 }
+    }
+    if(bundle->dest().equals(BundleDaemon::instance()->local_eid()))
+    {
+    	return false;
     }    
 
 
