@@ -2463,6 +2463,12 @@ BundleDaemon::add_to_pending(Bundle* bundle, bool add_to_store)
 {
     bool ok_to_route = true;
 
+    if(bundle->source().equals(bundle->dest()))
+    {
+    	 log_warn("add_to_pending self production avoidance");
+         return false;
+    }
+    
     log_debug("adding bundle *%p to pending list (%d)",
               bundle, add_to_store);
  
@@ -2835,7 +2841,6 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
      */
     ASSERT ( block != NULL );
     BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(block->locals());
-
     log_info_p("/dtn/daemon/bpq", "handle_bpq_block: Kind: %d Query: %s",
         (int)  bpq_block->kind(),
         (char*)bpq_block->query_val());
@@ -2863,6 +2868,17 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
 
     } else if (bpq_block->kind() == BPQBlock::KIND_RESPONSE ||
                bpq_block->kind() == BPQBlock::KIND_PUBLISH) {
+        if(bpq_block->kind() == BPQBlock::KIND_RESPONSE)
+        {
+        	log_warn("pre check self responded bundle");
+                log_warn("source: %s, dest:%s", bundle->source().c_str(), bundle->dest().c_str());
+                if(bundle->source().equals(bundle->dest()))
+                {
+                	local_bundle = true;
+                        log_warn("check self responded bundle");
+                }
+        }
+        
     	// don't accept local responses for KIND_RESPONSE
     	// This was originally because of a bug in the APIServer that
     	// didn't send api_blocks in local receives.  Now need to think
