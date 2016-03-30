@@ -1086,18 +1086,11 @@ recv_bpq(dtn_handle_t handle,
         	if (ret != DTN_SUCCESS) {
             		fprintf(stderr, "error handling file transfer: %d\n", ret);
                         continue;
-        	} else if (verbose) {
+        	} else {
             		fprintf(stdout, "sucessfully handled file transfer\n");
                         break;       
         	}
         }
-        // handle the payload file
-        /*ret = handle_file_transfer(bundle_spec, payload, filename, verbose);
-        if (ret != DTN_SUCCESS) {
-            fprintf(stderr, "error handling file transfer: %d\n", ret);
-        } else if (verbose) {
-            fprintf(stdout, "sucessfully handled file transfer\n");        
-        }*/
     
         dtn_free_payload(&payload);  
     }

@@ -532,22 +532,22 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  $(BASEEXT).bso blibdirs.ts \
-	  $(INST_ARCHAUTODIR)/extralibs.all mon.out \
-	  pm_to_blib.ts perlmain.c \
-	  core.[0-9] perl.exe \
-	  MYMETA.json perl \
-	  so_locations $(MAKE_APERL_FILE) \
-	  $(INST_ARCHAUTODIR)/extralibs.ld perl$(EXE_EXT) \
-	  core.*perl.*.? $(BASEEXT).x \
-	  core.[0-9][0-9][0-9][0-9][0-9] core.[0-9][0-9] \
-	  core.[0-9][0-9][0-9] core \
-	  $(BASEEXT).exp MYMETA.yml \
+	  core.[0-9][0-9][0-9] $(BASEEXT).x \
 	  *$(OBJ_EXT) core.[0-9][0-9][0-9][0-9] \
-	  lib$(BASEEXT).def $(BOOTSTRAP) \
-	  pm_to_blib $(BASEEXT).def \
-	  tmon.out *perl.core \
-	  *$(LIB_EXT) 
+	  so_locations perl$(EXE_EXT) \
+	  $(BOOTSTRAP) blibdirs.ts \
+	  core.*perl.*.? core.[0-9][0-9][0-9][0-9][0-9] \
+	  *$(LIB_EXT) tmon.out \
+	  perl.exe perl \
+	  pm_to_blib perlmain.c \
+	  $(INST_ARCHAUTODIR)/extralibs.ld *perl.core \
+	  mon.out pm_to_blib.ts \
+	  core core.[0-9] \
+	  $(INST_ARCHAUTODIR)/extralibs.all MYMETA.json \
+	  MYMETA.yml $(MAKE_APERL_FILE) \
+	  $(BASEEXT).def $(BASEEXT).bso \
+	  $(BASEEXT).exp lib$(BASEEXT).def \
+	  core.[0-9][0-9] 
 	- $(RM_RF) \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
@@ -562,8 +562,8 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(OBJECT) $(MAKEFILE_OLD) \
-	  $(FIRST_MAKEFILE) 
+	  $(OBJECT) $(FIRST_MAKEFILE) \
+	  $(MAKEFILE_OLD) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
