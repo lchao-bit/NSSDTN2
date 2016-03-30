@@ -997,7 +997,8 @@ recv_bpq(dtn_handle_t handle,
     dtn_timeval_t timeout,
     char * filename,
     int count,
-    int verbose)
+    int verbose,
+    char* query)
 {
     int ret = 0, err = 0, num_blocks, i, j;
     int has_bpq_block = 0;
@@ -1006,7 +1007,7 @@ recv_bpq(dtn_handle_t handle,
     dtn_bpq_extension_block_data_t  bpq_block_data;
     dtn_bundle_payload_t            payload;
 
-    for(j = 0; (count == 0) || (j < count); ++j) {
+    while(1) {
         memset(&bundle_spec, 0, sizeof(bundle_spec));
         memset(&bpq_block_data, 0, sizeof(dtn_bpq_extension_block_data_t));
         memset(&payload, 0, sizeof(payload));
@@ -1076,16 +1077,27 @@ recv_bpq(dtn_handle_t handle,
             continue;
         }
 
-        if(err)
+        if(err) 
             continue;
-
+        
+        if((strcmp(query, bpq_block_data.query.query_val) == 0) && (bpq_block_data.kind == BPQ_BLOCK_KIND_RESPONSE))
+        {
+		ret = handle_file_transfer(bundle_spec, payload, filename, verbose);
+        	if (ret != DTN_SUCCESS) {
+            		fprintf(stderr, "error handling file transfer: %d\n", ret);
+                        continue;
+        	} else if (verbose) {
+            		fprintf(stdout, "sucessfully handled file transfer\n");
+                        break;       
+        	}
+        }
         // handle the payload file
-        ret = handle_file_transfer(bundle_spec, payload, filename, verbose);
+        /*ret = handle_file_transfer(bundle_spec, payload, filename, verbose);
         if (ret != DTN_SUCCESS) {
             fprintf(stderr, "error handling file transfer: %d\n", ret);
         } else if (verbose) {
             fprintf(stdout, "sucessfully handled file transfer\n");        
-        }
+        }*/
     
         dtn_free_payload(&payload);  
     }
@@ -1221,7 +1233,7 @@ main(int argc, char** argv)
         break;
 
     case DTN_BPQ_RECV:
-        TRY( recv_bpq(handle, timeout, filename, count, verbose), 
+        TRY( recv_bpq(handle, timeout, filename, count, verbose, query), 
              "error receiving query\n" );
         break;
 
@@ -1230,7 +1242,7 @@ main(int argc, char** argv)
                       matching_rule, bundle_expiry, priority,
                       delivery_options, verbose), "error sending query\n" );
 
-        TRY( recv_bpq(handle, timeout, filename, count, verbose), 
+        TRY( recv_bpq(handle, timeout, filename, count, verbose, query), 
              "error receiving query\n" );
         break;
 

@@ -126,7 +126,7 @@ BPQCache::answer_query(Bundle* bundle, BPQBlock* block)
 		return false;
 	}
 
-	log_debug("response found in cache");
+	log_warn("response found in cache, key:%s", key.c_str());
 	BPQCacheEntry* entry = cache_iter->second;
 	EndpointID local_eid = BundleDaemon::instance()->local_eid();
 
