@@ -68,4 +68,5 @@ def request(context, flow):
                 flow.reply(resp)
     resp = HTTPResponse(
 		"HTTP/1.1", 404, "Not Found", Headers(Content_Type="text/html"), "Not Found")
+    resp.headers["Content-Length"] = str(len("Not Found"))
     flow.reply(resp)

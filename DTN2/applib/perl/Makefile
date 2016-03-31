@@ -188,10 +188,10 @@ PERL_ARCHIVE_AFTER =
 TO_INST_PM = dtnapi.pm \
 	test-swig-api.pl
 
-PM_TO_BLIB = dtnapi.pm \
-	$(INST_LIB)/dtnapi.pm \
-	test-swig-api.pl \
-	$(INST_LIB)/test-swig-api.pl
+PM_TO_BLIB = test-swig-api.pl \
+	$(INST_LIB)/test-swig-api.pl \
+	dtnapi.pm \
+	$(INST_LIB)/dtnapi.pm
 
 
 # --- MakeMaker platform_constants section:
@@ -532,22 +532,22 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  core.[0-9][0-9][0-9] $(BASEEXT).x \
-	  *$(OBJ_EXT) core.[0-9][0-9][0-9][0-9] \
-	  so_locations perl$(EXE_EXT) \
-	  $(BOOTSTRAP) blibdirs.ts \
-	  core.*perl.*.? core.[0-9][0-9][0-9][0-9][0-9] \
-	  *$(LIB_EXT) tmon.out \
-	  perl.exe perl \
-	  pm_to_blib perlmain.c \
-	  $(INST_ARCHAUTODIR)/extralibs.ld *perl.core \
-	  mon.out pm_to_blib.ts \
-	  core core.[0-9] \
-	  $(INST_ARCHAUTODIR)/extralibs.all MYMETA.json \
-	  MYMETA.yml $(MAKE_APERL_FILE) \
-	  $(BASEEXT).def $(BASEEXT).bso \
-	  $(BASEEXT).exp lib$(BASEEXT).def \
-	  core.[0-9][0-9] 
+	  *$(OBJ_EXT) blibdirs.ts \
+	  core.[0-9][0-9] MYMETA.json \
+	  $(BASEEXT).x core.[0-9][0-9][0-9][0-9] \
+	  mon.out perl.exe \
+	  $(INST_ARCHAUTODIR)/extralibs.ld *$(LIB_EXT) \
+	  pm_to_blib.ts core \
+	  so_locations *perl.core \
+	  core.[0-9][0-9][0-9] perl$(EXE_EXT) \
+	  lib$(BASEEXT).def tmon.out \
+	  $(BASEEXT).def core.[0-9] \
+	  $(INST_ARCHAUTODIR)/extralibs.all $(BASEEXT).exp \
+	  core.*perl.*.? perlmain.c \
+	  $(BOOTSTRAP) pm_to_blib \
+	  core.[0-9][0-9][0-9][0-9][0-9] $(BASEEXT).bso \
+	  $(MAKE_APERL_FILE) perl \
+	  MYMETA.yml 
 	- $(RM_RF) \
 	  blib 
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
@@ -562,8 +562,8 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(OBJECT) $(FIRST_MAKEFILE) \
-	  $(MAKEFILE_OLD) 
+	  $(MAKEFILE_OLD) $(OBJECT) \
+	  $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -1023,8 +1023,8 @@ ppd :
 
 pm_to_blib : $(FIRST_MAKEFILE) $(TO_INST_PM)
 	$(NOECHO) $(ABSPERLRUN) -MExtUtils::Install -e 'pm_to_blib({@ARGV}, '\''$(INST_LIB)/auto'\'', q[$(PM_FILTER)], '\''$(PERM_DIR)'\'')' -- \
-	  dtnapi.pm $(INST_LIB)/dtnapi.pm \
-	  test-swig-api.pl $(INST_LIB)/test-swig-api.pl 
+	  test-swig-api.pl $(INST_LIB)/test-swig-api.pl \
+	  dtnapi.pm $(INST_LIB)/dtnapi.pm 
 	$(NOECHO) $(TOUCH) pm_to_blib
 
 
