@@ -1006,7 +1006,6 @@ recv_bpq(dtn_handle_t handle,
     dtn_extension_block_t*          bpq_blocks;
     dtn_bpq_extension_block_data_t  bpq_block_data;
     dtn_bundle_payload_t            payload;
-
     while(1) {
         memset(&bundle_spec, 0, sizeof(bundle_spec));
         memset(&bpq_block_data, 0, sizeof(dtn_bpq_extension_block_data_t));
@@ -1234,7 +1233,7 @@ main(int argc, char** argv)
         TRY( send_bpq(handle, regid, &src_eid, &dest_eid, &reply_eid, query,
                       matching_rule, bundle_expiry, priority,
                       delivery_options, verbose), "error sending query\n" );
-
+ 
         TRY( recv_bpq(handle, timeout, filename, count, verbose, query), 
              "error receiving query\n" );
         break;

@@ -977,7 +977,6 @@ BundleDaemon::handle_bundle_received(BundleReceivedEvent* event)
         }
 
     }
-
     /*
      * Finally, bounce out so the router(s) can do something further
      * with the bundle in response to the event before we check to 
@@ -1205,13 +1204,65 @@ BundleDaemon::handle_bundle_delivered(BundleDeliveredEvent* event)
     
     oasys::DurableStore *store = oasys::DurableStore::instance();
     store->begin_transaction();
-
     /*
      * The bundle was delivered to a registration.
      */
     Bundle* bundle = event->bundleref_.object();
 
-    log_info("BUNDLE_DELIVERED id:%d (%zu bytes) -> regid %d (%s)",
+    log_warn("in bundle delivered, source:%s, dest:%s", bundle->source().c_str(), bundle->dest().c_str());
+
+    char logfile[255];
+    const BlockInfo* bkinfo = NULL;
+    if (bundle->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+        BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        u_int reqnamelen = bpq_block->query_len();
+        u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+        reqnameval = bpq_block->query_val();
+        logfile[0] = '\0';
+        strcat(logfile, "/home/dtn2/delivered/");
+        strcat(logfile, (char*)reqnameval);
+        log_warn("logfile:%s", logfile);
+        char copycomm[200], bundleid[10];
+        copycomm[0] = '\0';
+        strcat(copycomm, "cp /var/dtn/bundles/bundle_");
+        sprintf(bundleid, "%d", bundle->bundleid());
+        strcat(copycomm, bundleid);
+        strcat(copycomm, ".dat /home/dtn2/bpqrecv/");
+        strcat(copycomm, (char*)reqnameval);
+        log_warn("copycomm:%s", copycomm);
+        system(copycomm);
+        FILE *fp;
+        fp = fopen(logfile, "w");
+        fclose(fp);
+    }
+    else if(bundle->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        u_int reqnamelen = bpq_block->query_len();
+        u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+        reqnameval = bpq_block->query_val();
+        logfile[0] = '\0';
+        strcat(logfile, "/home/dtn2/delivered/");
+        strcat(logfile, (char*)reqnameval);
+        log_warn("logfile:%s", logfile);
+        char copycomm[200], bundleid[10];
+        copycomm[0] = '\0';
+        strcat(copycomm, "cp /var/dtn/bundles/bundle_");
+        sprintf(bundleid, "%d", bundle->bundleid());
+        strcat(copycomm, bundleid);
+        strcat(copycomm, ".dat /home/dtn2/bpqrecv/");
+        strcat(copycomm, (char*)reqnameval);
+        log_warn("copycomm:%s", copycomm);
+        system(copycomm);
+        FILE *fp;
+        fp = fopen(logfile, "w");
+        fclose(fp);
+    }
+
+        log_info("BUNDLE_DELIVERED id:%d (%zu bytes) -> regid %d (%s)",
              bundle->bundleid(), bundle->payload().length(),
              event->registration_->regid(),
              event->registration_->endpoint().c_str());
