@@ -26,8 +26,10 @@ def request(context, flow):
                 flow.reply(resp)
                 
 	else:
-		querycomm = "/home/dtn2/dtn2/NSSDTN2/DTN2/apps/dtnquery/dtnquery -s dtn://dtn1.dtn -d dtn://dtn2.dtn -q " + imagename + " -f " + imagefilepath;
+		querycomm = "/home/dtn2/dtn2/NSSDTN2/DTN2/apps/dtnquery/dtnquery -m send -s dtn://dtn1.dtn -d dtn://dtn2.dtn -q " + imagename + " -f " + imagefilepath;
 		os.system(querycomm);
+                waitingcomm = "/home/dtn2/dtn2/NSSDTN2/waiting " + imagename;
+                os.system(waitingcomm);
         	resp = HTTPResponse(
 		"HTTP/1.1", 200, "OK", Headers(Content_Type="image/png"), "helloworld")
                 with open(imagefilepath, 'r') as f:
@@ -54,8 +56,10 @@ def request(context, flow):
                         f.close()
                 flow.reply(resp)
         else:
-        	querycomm = "/home/dtn2/dtn2/NSSDTN2/DTN2/apps/dtnquery/dtnquery -s dtn://dtn1.dtn -d dtn://dtn2.dtn -q " + vectorname + " -f " + vectorfilepath;
+        	querycomm = "/home/dtn2/dtn2/NSSDTN2/DTN2/apps/dtnquery/dtnquery -m send -s dtn://dtn1.dtn -d dtn://dtn2.dtn -q " + vectorname + " -f " + vectorfilepath;
 		os.system(querycomm);
+                waitingcomm = "/home/dtn2/dtn2/NSSDTN2/waiting " + vectorname;
+                os.system(waitingcomm);
 		resp = HTTPResponse(
 		"HTTP/1.1", 200, "OK", Headers(Content_Type="application/json"), "helloworld")
                 with open(vectorfilepath, 'r') as f:
