@@ -10,13 +10,16 @@ if ty == "i":
   imageurl="http://166.111.68.197:11193/geoserver/i/" + sl
   imagecomm="curl -o /home/dtn2/respondfile/" + name + " " + imageurl
   pubimage="dtnpublish -s dtn://dtn2.dtn -d dtn://dtne.dtn -p /home/dtn2/respondfile/" + name + " -n " + name
+  delimage="rm " + "/home/dtn2/respondfile/" + name
   os.system(imagecomm)
   os.system(pubimage)
+  os.system(delimage)
 
 elif ty == "v":
   vectorurl="http://166.111.68.197:11193/geoserver/v/" + sl
   vectorcomm="curl -o /home/dtn2/respondfile/" + name + " " + vectorurl
   pubvector="dtnpublish -s dtn://dtn2.dtn -d dtn://dtne.dtn -p /home/dtn2/respondfile/" + name + " -n " + name
+  delvector="rm " + "/home/dtn2/respondfile/" + name
   os.system(vectorcomm)
   os.system(pubvector)
-  
+  os.system(delvector)
