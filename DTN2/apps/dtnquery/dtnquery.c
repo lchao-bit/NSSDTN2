@@ -497,12 +497,24 @@ register_with_dtn(dtn_handle_t handle,
 
     if (call_bind) {
         // bind the current handle to the found registration
-        if (dtn_bind(handle, *regid) != DTN_SUCCESS) {
-            fprintf(stderr, "error binding to registration: %s\n",
-                    dtn_strerror(dtn_errno(handle)));
-            dtn_close(handle);
-            exit(1);
+        int total = 0;
+        while(total <= 15)
+        {
+           total += 1;
+           if (dtn_bind(handle, *regid) != DTN_SUCCESS) 
+           {
+	      sleep(1);
+              fprintf(stderr, "waiting for DTN Registration\n");	
+           }
+           else
+           {
+              return DTN_SUCCESS;
+           }
         }
+        fprintf(stderr, "error binding to registration: %s\n",
+                    dtn_strerror(dtn_errno(handle)));
+        dtn_close(handle);
+        exit(1);
     }
 
     return DTN_SUCCESS;

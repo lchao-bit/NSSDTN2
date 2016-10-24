@@ -1,12 +1,12 @@
 # This Makefile is for the dtnapi extension to perl.
 #
 # It was generated automatically by MakeMaker version
-# 6.66 (Revision: 66600) from the contents of
+# 6.98 (Revision: 69800) from the contents of
 # Makefile.PL. Don't edit this file, edit Makefile.PL instead.
 #
 #       ANY CHANGES MADE HERE WILL BE LOST!
 #
-#   MakeMaker ARGV: (q[CC=g++], q[LD=g++], q[CCFLAGS=-g], q[-fno-inline], q[-fPIC], q[-DPIC], q[-MMD], q[-MP], q[-MT], q[perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E], q[-DHAVE_CONFIG_H], q[-D_LARGEFILE_SOURCE], q[-D_FILE_OFFSET_BITS=64], q[-I..], q[-I..], q[-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include], q[-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext], q[-I../servlib], q[-I/opt/tcl/include], q[-I/opt/db/include], q[-Wall], q[-W], q[-Wcast-align], q[VERSION=2.9.0])
+#   MakeMaker ARGV: (q[CC=g++], q[LD=g++], q[CCFLAGS=-DNDEBUG], q[-fPIC], q[-DPIC], q[-MMD], q[-MP], q[-MT], q[perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E], q[-DHAVE_CONFIG_H], q[-D_LARGEFILE_SOURCE], q[-D_FILE_OFFSET_BITS=64], q[-I..], q[-I..], q[-I/home/root/DTN2/oasys/include], q[-I/home/root/DTN2/oasys/include/oasys/ext], q[-I../servlib], q[-I/opt/galileotcl//include], q[-I/opt/galileodb//include], q[-fpermissive], q[-Wall], q[-W], q[-Wcast-align], q[VERSION=2.9.0])
 #
 
 #   MakeMaker Parameters:
@@ -14,7 +14,7 @@
 #     BUILD_REQUIRES => {  }
 #     CONFIGURE_REQUIRES => {  }
 #     FIRST_MAKEFILE => q[Makefile]
-#     INC => q[-I ../../ -I /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include]
+#     INC => q[-I ../../ -I /home/root/DTN2/oasys/include]
 #     LIBS => [q[-L.. -ldtnapi]]
 #     NAME => q[dtnapi]
 #     OBJECT => q[dtn_api_wrap_perl.o]
@@ -26,30 +26,30 @@
 
 # --- MakeMaker const_config section:
 
-# These definitions are from config.sh (via /usr/lib/perl/5.18/Config.pm).
+# These definitions are from config.sh (via /usr/lib/perl/5.20.0/Config.pm).
 # They may have been overridden via Makefile.PL or on the command line.
-AR = ar
+AR = i586-poky-linux-ar
 CC = g++
 CCCDLFLAGS = -fPIC
-CCDLFLAGS = -Wl,-E
+CCDLFLAGS = -Wl,-E -Wl,-rpath,/usr/lib/perl/5.20.0//CORE
 DLEXT = so
 DLSRC = dl_dlopen.xs
 EXE_EXT = 
-FULL_AR = /usr/bin/ar
+FULL_AR = i586-poky-linux/i586-poky-linux-ar
 LD = g++
-LDDLFLAGS = -shared -L/usr/local/lib -fstack-protector
-LDFLAGS =  -fstack-protector -L/usr/local/lib
-LIBC = 
+LDDLFLAGS = -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed -fstack-protector -shared
+LDFLAGS = -Wl,-O1 -Wl,--hash-style=gnu -Wl,--as-needed -fstack-protector
+LIBC = /lib/libc-2.19.so
 LIB_EXT = .a
 OBJ_EXT = .o
 OSNAME = linux
-OSVERS = 3.2.0-37-generic
+OSVERS = 3.14.5-yocto-standard
 RANLIB = :
-SITELIBEXP = /usr/local/share/perl/5.18.2
-SITEARCHEXP = /usr/local/lib/perl/5.18.2
+SITELIBEXP = /usr/lib/perl/site_perl/5.20.0
+SITEARCHEXP = /usr/lib/perl/site_perl/5.20.0/
 SO = so
-VENDORARCHEXP = /usr/lib/perl5
-VENDORLIBEXP = /usr/share/perl5
+VENDORARCHEXP = /usr/lib/perl/vendor_perl/5.20.0/
+VENDORLIBEXP = /usr/lib/perl/vendor_perl/5.20.0
 
 
 # --- MakeMaker constants section:
@@ -71,25 +71,25 @@ INST_BIN = blib/bin
 INST_LIB = blib/lib
 INST_MAN1DIR = blib/man1
 INST_MAN3DIR = blib/man3
-MAN1EXT = 1p
-MAN3EXT = 3pm
+MAN1EXT = 0
+MAN3EXT = 0
 INSTALLDIRS = site
 DESTDIR = 
 PREFIX = /usr
 PERLPREFIX = $(PREFIX)
-SITEPREFIX = $(PREFIX)/local
+SITEPREFIX = $(PREFIX)
 VENDORPREFIX = $(PREFIX)
-INSTALLPRIVLIB = $(PERLPREFIX)/share/perl/5.18
+INSTALLPRIVLIB = $(PERLPREFIX)/lib/perl/5.20.0
 DESTINSTALLPRIVLIB = $(DESTDIR)$(INSTALLPRIVLIB)
-INSTALLSITELIB = $(SITEPREFIX)/share/perl/5.18.2
+INSTALLSITELIB = $(SITEPREFIX)/lib/perl/site_perl/5.20.0
 DESTINSTALLSITELIB = $(DESTDIR)$(INSTALLSITELIB)
-INSTALLVENDORLIB = $(VENDORPREFIX)/share/perl5
+INSTALLVENDORLIB = $(VENDORPREFIX)/lib/perl/vendor_perl/5.20.0
 DESTINSTALLVENDORLIB = $(DESTDIR)$(INSTALLVENDORLIB)
-INSTALLARCHLIB = $(PERLPREFIX)/lib/perl/5.18
+INSTALLARCHLIB = $(PERLPREFIX)/lib/perl/5.20.0/
 DESTINSTALLARCHLIB = $(DESTDIR)$(INSTALLARCHLIB)
-INSTALLSITEARCH = $(SITEPREFIX)/lib/perl/5.18.2
+INSTALLSITEARCH = $(SITEPREFIX)/lib/perl/site_perl/5.20.0/
 DESTINSTALLSITEARCH = $(DESTDIR)$(INSTALLSITEARCH)
-INSTALLVENDORARCH = $(VENDORPREFIX)/lib/perl5
+INSTALLVENDORARCH = $(VENDORPREFIX)/lib/perl/vendor_perl/5.20.0/
 DESTINSTALLVENDORARCH = $(DESTDIR)$(INSTALLVENDORARCH)
 INSTALLBIN = $(PERLPREFIX)/bin
 DESTINSTALLBIN = $(DESTDIR)$(INSTALLBIN)
@@ -103,28 +103,28 @@ INSTALLSITESCRIPT = $(SITEPREFIX)/bin
 DESTINSTALLSITESCRIPT = $(DESTDIR)$(INSTALLSITESCRIPT)
 INSTALLVENDORSCRIPT = $(VENDORPREFIX)/bin
 DESTINSTALLVENDORSCRIPT = $(DESTDIR)$(INSTALLVENDORSCRIPT)
-INSTALLMAN1DIR = $(PERLPREFIX)/share/man/man1
+INSTALLMAN1DIR = none
 DESTINSTALLMAN1DIR = $(DESTDIR)$(INSTALLMAN1DIR)
-INSTALLSITEMAN1DIR = $(SITEPREFIX)/man/man1
+INSTALLSITEMAN1DIR = $(INSTALLMAN1DIR)
 DESTINSTALLSITEMAN1DIR = $(DESTDIR)$(INSTALLSITEMAN1DIR)
-INSTALLVENDORMAN1DIR = $(VENDORPREFIX)/share/man/man1
+INSTALLVENDORMAN1DIR = $(INSTALLMAN1DIR)
 DESTINSTALLVENDORMAN1DIR = $(DESTDIR)$(INSTALLVENDORMAN1DIR)
-INSTALLMAN3DIR = $(PERLPREFIX)/share/man/man3
+INSTALLMAN3DIR = none
 DESTINSTALLMAN3DIR = $(DESTDIR)$(INSTALLMAN3DIR)
-INSTALLSITEMAN3DIR = $(SITEPREFIX)/man/man3
+INSTALLSITEMAN3DIR = $(INSTALLMAN3DIR)
 DESTINSTALLSITEMAN3DIR = $(DESTDIR)$(INSTALLSITEMAN3DIR)
-INSTALLVENDORMAN3DIR = $(VENDORPREFIX)/share/man/man3
+INSTALLVENDORMAN3DIR = $(INSTALLMAN3DIR)
 DESTINSTALLVENDORMAN3DIR = $(DESTDIR)$(INSTALLVENDORMAN3DIR)
-PERL_LIB = /usr/share/perl/5.18
-PERL_ARCHLIB = /usr/lib/perl/5.18
+PERL_LIB = /usr/lib/perl/5.20.0
+PERL_ARCHLIB = /usr/lib/perl/5.20.0/
 LIBPERL_A = libperl.a
 FIRST_MAKEFILE = Makefile
 MAKEFILE_OLD = Makefile.old
 MAKE_APERL_FILE = Makefile.aperl
 PERLMAINCC = $(CC)
-PERL_INC = /usr/lib/perl/5.18/CORE
-PERL = /usr/bin/perl
-FULLPERL = /usr/bin/perl
+PERL_INC = /usr/lib/perl/5.20.0/CORE
+PERL = /usr/bin/perl5.20.0
+FULLPERL = /usr/bin/perl5.20.0
 ABSPERL = $(PERL)
 PERLRUN = $(PERL)
 FULLPERLRUN = $(FULLPERL)
@@ -137,9 +137,9 @@ PERM_DIR = 755
 PERM_RW = 644
 PERM_RWX = 755
 
-MAKEMAKER   = /usr/share/perl/5.18/ExtUtils/MakeMaker.pm
-MM_VERSION  = 6.66
-MM_REVISION = 66600
+MAKEMAKER   = /usr/lib/perl/5.20.0/ExtUtils/MakeMaker.pm
+MM_VERSION  = 6.98
+MM_REVISION = 69800
 
 # FULLEXT = Pathname for extension directory (eg Foo/Bar/Oracle).
 # BASEEXT = Basename part of FULLEXT. May be just equal FULLEXT. (eg Oracle)
@@ -151,7 +151,7 @@ BASEEXT = dtnapi
 PARENT_NAME = 
 DLBASE = $(BASEEXT)
 VERSION_FROM = 
-INC = -I ../../ -I /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include
+INC = -I ../../ -I /home/root/DTN2/oasys/include
 OBJECT = dtn_api_wrap_perl$(OBJ_EXT)
 LDFROM = $(OBJECT)
 LINKTYPE = dynamic
@@ -195,7 +195,7 @@ PM_TO_BLIB = dtnapi.pm \
 
 
 # --- MakeMaker platform_constants section:
-MM_Unix_VERSION = 6.66
+MM_Unix_VERSION = 6.98
 PERL_MALLOC_DEF = -DPERL_EXTMALLOC_DEF -Dmalloc=Perl_malloc -Dfree=Perl_mfree -Drealloc=Perl_realloc -Dcalloc=Perl_calloc
 
 
@@ -207,13 +207,13 @@ AUTOSPLITFILE = $(ABSPERLRUN)  -e 'use AutoSplit;  autosplit($$$$ARGV[0], $$$$AR
 
 # --- MakeMaker tool_xsubpp section:
 
-XSUBPPDIR = /usr/share/perl/5.18/ExtUtils
+XSUBPPDIR = /usr/lib/perl/site_perl/5.20.0/ExtUtils
 XSUBPP = $(XSUBPPDIR)$(DFSEP)xsubpp
 XSUBPPRUN = $(PERLRUN) $(XSUBPP)
 XSPROTOARG = 
-XSUBPPDEPS = /usr/share/perl/5.18/ExtUtils/typemap $(XSUBPP)
-XSUBPPARGS = -typemap /usr/share/perl/5.18/ExtUtils/typemap
-XSUBPP_EXTRA_ARGS = 
+XSUBPPDEPS = /usr/lib/perl/5.20.0/ExtUtils/typemap $(XSUBPP)
+XSUBPPARGS = -typemap /usr/lib/perl/5.20.0/ExtUtils/typemap
+XSUBPP_EXTRA_ARGS =
 
 
 # --- MakeMaker tools_other section:
@@ -245,6 +245,7 @@ MACROSTART =
 MACROEND = 
 USEMAKEFILE = -f
 FIXIN = $(ABSPERLRUN) -MExtUtils::MY -e 'MY->fixin(shift)' --
+CP_NONEMPTY = $(ABSPERLRUN) -MExtUtils::Command::MM -e 'cp_nonempty' --
 
 
 # --- MakeMaker makemakerdflt section:
@@ -279,8 +280,8 @@ DISTVNAME = dtnapi-2.9.0
 
 # --- MakeMaker cflags section:
 
-CCFLAGS = -g
-OPTIMIZE = -O2 -g
+CCFLAGS = -DNDEBUG
+OPTIMIZE = -O2
 PERLTYPE = 
 MPOLLUTE = 
 
@@ -290,8 +291,8 @@ MPOLLUTE =
 # dtnapi might depend on some other libraries:
 # See ExtUtils::Liblist for details
 #
-EXTRALIBS = -L/home/dtn2/dtn2/NSSDTN2/DTN2/applib/perl/.. -ldtnapi
-LDLOADLIBS = -L/home/dtn2/dtn2/NSSDTN2/DTN2/applib/perl/.. -ldtnapi
+EXTRALIBS = -L/home/root/DTN2/applib/perl/.. -ldtnapi
+LDLOADLIBS = -L/home/root/DTN2/applib/perl/.. -ldtnapi
 BSLOADLIBS = 
 
 
@@ -309,7 +310,6 @@ CCCMD = $(CC) -c $(PASTHRU_INC) $(INC) \
 PASTHRU = LIBPERL_A="$(LIBPERL_A)"\
 	LINKTYPE="$(LINKTYPE)"\
 	OPTIMIZE="$(OPTIMIZE)"\
-	LD="$(LD)"\
 	PREFIX="$(PREFIX)"\
 	PASTHRU_INC="$(PASTHRU_INC)"
 
@@ -324,7 +324,7 @@ PASTHRU = LIBPERL_A="$(LIBPERL_A)"\
 # --- MakeMaker c_o section:
 
 .c.i:
-	cc -E -c $(PASTHRU_INC) $(INC) \
+	i586-poky-linux-gcc  -m32 -march=i586  -E -c $(PASTHRU_INC) $(INC) \
 	$(CCFLAGS) $(OPTIMIZE) \
 	$(PERLTYPE) $(MPOLLUTE) $(DEFINE_VERSION) \
 	$(XS_DEFINE_VERSION) $(CCCDLFLAGS) "-I$(PERL_INC)" $(PASTHRU_DEFINE) $(DEFINE) $*.c > $*.i
@@ -438,12 +438,6 @@ linkext :: $(LINKTYPE)
 # --- MakeMaker dlsyms section:
 
 
-# --- MakeMaker dynamic section:
-
-dynamic :: $(FIRST_MAKEFILE) $(INST_DYNAMIC) $(INST_BOOT)
-	$(NOECHO) $(NOOP)
-
-
 # --- MakeMaker dynamic_bs section:
 BOOTSTRAP = $(BASEEXT).bs
 
@@ -458,10 +452,11 @@ $(BOOTSTRAP) : $(FIRST_MAKEFILE) $(BOOTDEP) $(INST_ARCHAUTODIR)$(DFSEP).exists
 	$(NOECHO) $(TOUCH) $@
 	$(CHMOD) $(PERM_RW) $@
 
-$(INST_BOOT) : $(BOOTSTRAP) $(INST_ARCHAUTODIR)$(DFSEP).exists
-	$(NOECHO) $(RM_RF) $@
-	- $(CP) $(BOOTSTRAP) $@
-	$(CHMOD) $(PERM_RW) $@
+
+# --- MakeMaker dynamic section:
+
+dynamic :: $(FIRST_MAKEFILE) $(BOOTSTRAP) $(INST_DYNAMIC)
+	$(NOECHO) $(NOOP)
 
 
 # --- MakeMaker dynamic_lib section:
@@ -473,12 +468,14 @@ OTHERLDFLAGS =
 INST_DYNAMIC_DEP = 
 INST_DYNAMIC_FIX = 
 
-$(INST_DYNAMIC): $(OBJECT) $(MYEXTLIB) $(BOOTSTRAP) $(INST_ARCHAUTODIR)$(DFSEP).exists $(EXPORT_LIST) $(PERL_ARCHIVE) $(PERL_ARCHIVE_AFTER) $(INST_DYNAMIC_DEP)
+$(INST_DYNAMIC): $(OBJECT) $(MYEXTLIB) $(INST_ARCHAUTODIR)$(DFSEP).exists $(EXPORT_LIST) $(PERL_ARCHIVE) $(PERL_ARCHIVE_AFTER) $(INST_DYNAMIC_DEP)
 	$(RM_F) $@
 	$(LD)  $(LDDLFLAGS) $(LDFROM) $(OTHERLDFLAGS) -o $@ $(MYEXTLIB)	\
 	  $(PERL_ARCHIVE) $(LDLOADLIBS) $(PERL_ARCHIVE_AFTER) $(EXPORT_LIST)	\
 	  $(INST_DYNAMIC_FIX)
 	$(CHMOD) $(PERM_RWX) $@
+	$(NOECHO) $(RM_RF) $(BOOTSTRAP)
+	- $(CP_NONEMPTY) $(BOOTSTRAP) $(INST_BOOT) $(PERM_RW)
 
 
 # --- MakeMaker static section:
@@ -493,7 +490,7 @@ static :: $(FIRST_MAKEFILE) $(INST_STATIC)
 
 $(INST_STATIC) : $(OBJECT) $(MYEXTLIB) $(INST_ARCHAUTODIR)$(DFSEP).exists
 	$(RM_RF) $@
-	$(FULL_AR) $(AR_STATIC_ARGS) $@ $(OBJECT) && $(RANLIB) $@
+	$(AR) $(AR_STATIC_ARGS) $@ $(OBJECT) && $(RANLIB) $@
 	$(CHMOD) $(PERM_RWX) $@
 	$(NOECHO) $(ECHO) "$(EXTRALIBS)" > $(INST_ARCHAUTODIR)/extralibs.ld
 
@@ -532,24 +529,25 @@ clean_subdirs :
 
 clean :: clean_subdirs
 	- $(RM_F) \
-	  pm_to_blib.ts core.*perl.*.? \
-	  $(BASEEXT).exp tmon.out \
-	  *$(OBJ_EXT) core \
-	  MYMETA.yml core.[0-9][0-9] \
-	  $(BASEEXT).x $(BASEEXT).def \
-	  core.[0-9][0-9][0-9][0-9] perlmain.c \
-	  MYMETA.json $(INST_ARCHAUTODIR)/extralibs.all \
-	  core.[0-9][0-9][0-9][0-9][0-9] $(INST_ARCHAUTODIR)/extralibs.ld \
-	  blibdirs.ts pm_to_blib \
-	  so_locations *perl.core \
-	  perl$(EXE_EXT) *$(LIB_EXT) \
-	  $(BOOTSTRAP) $(BASEEXT).bso \
-	  mon.out $(MAKE_APERL_FILE) \
-	  perl.exe core.[0-9][0-9][0-9] \
-	  core.[0-9] perl \
-	  lib$(BASEEXT).def 
+	  $(BASEEXT).bso $(BASEEXT).def \
+	  $(BASEEXT).exp $(BASEEXT).x \
+	  $(BOOTSTRAP) $(INST_ARCHAUTODIR)/extralibs.all \
+	  $(INST_ARCHAUTODIR)/extralibs.ld $(MAKE_APERL_FILE) \
+	  *$(LIB_EXT) *$(OBJ_EXT) \
+	  *perl.core MYMETA.json \
+	  MYMETA.yml blibdirs.ts \
+	  core core.*perl.*.? \
+	  core.[0-9] core.[0-9][0-9] \
+	  core.[0-9][0-9][0-9] core.[0-9][0-9][0-9][0-9] \
+	  core.[0-9][0-9][0-9][0-9][0-9] lib$(BASEEXT).def \
+	  mon.out perl \
+	  perl$(EXE_EXT) perl.exe \
+	  perlmain.c pm_to_blib \
+	  pm_to_blib.ts so_locations \
+	  tmon.out 
 	- $(RM_RF) \
 	  blib 
+	  $(NOECHO) $(RM_F) $(MAKEFILE_OLD)
 	- $(MV) $(FIRST_MAKEFILE) $(MAKEFILE_OLD) $(DEV_NULL)
 
 
@@ -562,8 +560,8 @@ realclean_subdirs :
 # Delete temporary files (via clean) and also delete dist files
 realclean purge ::  clean realclean_subdirs
 	- $(RM_F) \
-	  $(MAKEFILE_OLD) $(FIRST_MAKEFILE) \
-	  $(OBJECT) 
+	  $(MAKEFILE_OLD) $(OBJECT) \
+	  $(FIRST_MAKEFILE) 
 	- $(RM_RF) \
 	  $(DISTVNAME) 
 
@@ -576,15 +574,15 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) 'author:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  - unknown' >> META_new.yml
 	$(NOECHO) $(ECHO) 'build_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: 0' >> META_new.yml
+	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: '\''0'\''' >> META_new.yml
 	$(NOECHO) $(ECHO) 'configure_requires:' >> META_new.yml
-	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: 0' >> META_new.yml
+	$(NOECHO) $(ECHO) '  ExtUtils::MakeMaker: '\''0'\''' >> META_new.yml
 	$(NOECHO) $(ECHO) 'dynamic_config: 1' >> META_new.yml
-	$(NOECHO) $(ECHO) 'generated_by: '\''ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921'\''' >> META_new.yml
+	$(NOECHO) $(ECHO) 'generated_by: '\''ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.140640'\''' >> META_new.yml
 	$(NOECHO) $(ECHO) 'license: unknown' >> META_new.yml
 	$(NOECHO) $(ECHO) 'meta-spec:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  url: http://module-build.sourceforge.net/META-spec-v1.4.html' >> META_new.yml
-	$(NOECHO) $(ECHO) '  version: 1.4' >> META_new.yml
+	$(NOECHO) $(ECHO) '  version: '\''1.4'\''' >> META_new.yml
 	$(NOECHO) $(ECHO) 'name: dtnapi' >> META_new.yml
 	$(NOECHO) $(ECHO) 'no_index:' >> META_new.yml
 	$(NOECHO) $(ECHO) '  directory:' >> META_new.yml
@@ -600,7 +598,7 @@ metafile : create_distdir
 	$(NOECHO) $(ECHO) '      "unknown"' >> META_new.json
 	$(NOECHO) $(ECHO) '   ],' >> META_new.json
 	$(NOECHO) $(ECHO) '   "dynamic_config" : 1,' >> META_new.json
-	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.120921",' >> META_new.json
+	$(NOECHO) $(ECHO) '   "generated_by" : "ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.140640",' >> META_new.json
 	$(NOECHO) $(ECHO) '   "license" : [' >> META_new.json
 	$(NOECHO) $(ECHO) '      "unknown"' >> META_new.json
 	$(NOECHO) $(ECHO) '   ],' >> META_new.json
@@ -655,7 +653,7 @@ manifest :
 	$(PERLRUN) "-MExtUtils::Manifest=mkmanifest" -e mkmanifest
 
 veryclean : realclean
-	$(RM_F) *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old 
+	$(RM_F) *~ */*~ *.orig */*.orig *.bak */*.bak *.old */*.old
 
 
 
@@ -670,6 +668,7 @@ tardist : $(DISTVNAME).tar$(SUFFIX)
 
 uutardist : $(DISTVNAME).tar$(SUFFIX)
 	uuencode $(DISTVNAME).tar$(SUFFIX) $(DISTVNAME).tar$(SUFFIX) > $(DISTVNAME).tar$(SUFFIX)_uu
+	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).tar$(SUFFIX)_uu'
 
 $(DISTVNAME).tar$(SUFFIX) : distdir
 	$(PREOP)
@@ -677,6 +676,7 @@ $(DISTVNAME).tar$(SUFFIX) : distdir
 	$(TAR) $(TARFLAGS) $(DISTVNAME).tar $(DISTVNAME)
 	$(RM_RF) $(DISTVNAME)
 	$(COMPRESS) $(DISTVNAME).tar
+	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).tar$(SUFFIX)'
 	$(POSTOP)
 
 zipdist : $(DISTVNAME).zip
@@ -686,12 +686,14 @@ $(DISTVNAME).zip : distdir
 	$(PREOP)
 	$(ZIP) $(ZIPFLAGS) $(DISTVNAME).zip $(DISTVNAME)
 	$(RM_RF) $(DISTVNAME)
+	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).zip'
 	$(POSTOP)
 
 shdist : distdir
 	$(PREOP)
 	$(SHAR) $(DISTVNAME) > $(DISTVNAME).shar
 	$(RM_RF) $(DISTVNAME)
+	$(NOECHO) $(ECHO) 'Created $(DISTVNAME).shar'
 	$(POSTOP)
 
 
@@ -708,7 +710,7 @@ distdir : create_distdir distmeta
 
 # --- MakeMaker dist_test section:
 disttest : distdir
-	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include" "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
+	cd $(DISTVNAME) && $(ABSPERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-DNDEBUG" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/root/DTN2/oasys/include" "-I/home/root/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/galileotcl//include" "-I/opt/galileodb//include" "-fpermissive" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
 	cd $(DISTVNAME) && $(MAKE) $(PASTHRU)
 	cd $(DISTVNAME) && $(MAKE) test $(PASTHRU)
 
@@ -736,7 +738,7 @@ distmeta : create_distdir metafile
 
 # --- MakeMaker distsignature section:
 distsignature : create_distdir
-	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{SIGNATURE} => q{Public-key signature (added by MakeMaker)}}) } ' \
+	$(NOECHO) cd $(DISTVNAME) && $(ABSPERLRUN) -MExtUtils::Manifest=maniadd -e 'eval { maniadd({q{SIGNATURE} => q{Public-key signature (added by MakeMaker)}}) }' \
 	  -e '    or print "Could not add SIGNATURE to MANIFEST: $$$${'\''@'\''}\n"' --
 	$(NOECHO) cd $(DISTVNAME) && $(TOUCH) SIGNATURE
 	cd $(DISTVNAME) && cpansign -s
@@ -803,6 +805,7 @@ pure_vendor_install :: all
 		$(INST_MAN1DIR) $(DESTINSTALLVENDORMAN1DIR) \
 		$(INST_MAN3DIR) $(DESTINSTALLVENDORMAN3DIR)
 
+
 doc_perl_install :: all
 
 doc_site_install :: all
@@ -852,7 +855,6 @@ PERL_HDRS = \
         $(PERL_INC)/embed.h            \
         $(PERL_INC)/embedvar.h            \
         $(PERL_INC)/fakesdio.h            \
-        $(PERL_INC)/fakethr.h            \
         $(PERL_INC)/feature.h            \
         $(PERL_INC)/form.h            \
         $(PERL_INC)/git_version.h            \
@@ -880,14 +882,12 @@ PERL_HDRS = \
         $(PERL_INC)/overload.h            \
         $(PERL_INC)/pad.h            \
         $(PERL_INC)/parser.h            \
-        $(PERL_INC)/patchlevel-debian.h            \
         $(PERL_INC)/patchlevel.h            \
         $(PERL_INC)/perl.h            \
         $(PERL_INC)/perlapi.h            \
         $(PERL_INC)/perlio.h            \
         $(PERL_INC)/perliol.h            \
         $(PERL_INC)/perlsdio.h            \
-        $(PERL_INC)/perlsfio.h            \
         $(PERL_INC)/perlvars.h            \
         $(PERL_INC)/perly.h            \
         $(PERL_INC)/pp.h            \
@@ -910,6 +910,7 @@ PERL_HDRS = \
         $(PERL_INC)/utfebcdic.h            \
         $(PERL_INC)/util.h            \
         $(PERL_INC)/uudmap.h            \
+        $(PERL_INC)/vutil.h            \
         $(PERL_INC)/warnings.h            
 
 $(OBJECT) : $(PERL_HDRS)
@@ -927,7 +928,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 	-$(NOECHO) $(RM_F) $(MAKEFILE_OLD)
 	-$(NOECHO) $(MV)   $(FIRST_MAKEFILE) $(MAKEFILE_OLD)
 	- $(MAKE) $(USEMAKEFILE) $(MAKEFILE_OLD) clean $(DEV_NULL)
-	$(PERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-g" "-fno-inline" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include" "-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/tcl/include" "-I/opt/db/include" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
+	$(PERLRUN) Makefile.PL "CC=g++" "LD=g++" "CCFLAGS=-DNDEBUG" "-fPIC" "-DPIC" "-MMD" "-MP" "-MT" "perl/dtn_api_wrap_perl.o perl/dtn_api_wrap_perl.E" "-DHAVE_CONFIG_H" "-D_LARGEFILE_SOURCE" "-D_FILE_OFFSET_BITS=64" "-I.." "-I.." "-I/home/root/DTN2/oasys/include" "-I/home/root/DTN2/oasys/include/oasys/ext" "-I../servlib" "-I/opt/galileotcl//include" "-I/opt/galileodb//include" "-fpermissive" "-Wall" "-W" "-Wcast-align" "VERSION=2.9.0"
 	$(NOECHO) $(ECHO) "==> Your Makefile has been rebuilt. <=="
 	$(NOECHO) $(ECHO) "==> Please rerun the $(MAKE) command.  <=="
 	$(FALSE)
@@ -938,7 +939,7 @@ $(FIRST_MAKEFILE) : Makefile.PL $(CONFIGDEP)
 
 # --- MakeMaker makeaperl section ---
 MAP_TARGET    = perl
-FULLPERL      = /usr/bin/perl
+FULLPERL      = /usr/bin/perl5.20.0
 
 $(MAP_TARGET) :: static $(MAKE_APERL_FILE)
 	$(MAKE) $(USEMAKEFILE) $(MAKE_APERL_FILE) $@
@@ -951,8 +952,7 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 		MAKEAPERL=1 NORECURS=1 CCCDLFLAGS= \
 		CC=g++ \
 		LD=g++ \
-		CCFLAGS=-g \
-		-fno-inline \
+		CCFLAGS=-DNDEBUG \
 		-fPIC \
 		-DPIC \
 		-MMD \
@@ -964,11 +964,12 @@ $(MAKE_APERL_FILE) : $(FIRST_MAKEFILE) pm_to_blib
 		-D_FILE_OFFSET_BITS=64 \
 		-I.. \
 		-I.. \
-		-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include \
-		-I/home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include/oasys/ext \
+		-I/home/root/DTN2/oasys/include \
+		-I/home/root/DTN2/oasys/include/oasys/ext \
 		-I../servlib \
-		-I/opt/tcl/include \
-		-I/opt/db/include \
+		-I/opt/galileotcl//include \
+		-I/opt/galileodb//include \
+		-fpermissive \
 		-Wall \
 		-W \
 		-Wcast-align \
@@ -1013,7 +1014,7 @@ ppd :
 	$(NOECHO) $(ECHO) '    <ABSTRACT></ABSTRACT>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <AUTHOR></AUTHOR>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    <IMPLEMENTATION>' >> $(DISTNAME).ppd
-	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i686-linux-gnu-thread-multi-64int-5.18" />' >> $(DISTNAME).ppd
+	$(NOECHO) $(ECHO) '        <ARCHITECTURE NAME="i586-linux-5.20" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '        <CODEBASE HREF="" />' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '    </IMPLEMENTATION>' >> $(DISTNAME).ppd
 	$(NOECHO) $(ECHO) '</SOFTPKG>' >> $(DISTNAME).ppd

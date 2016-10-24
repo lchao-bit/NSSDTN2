@@ -9,24 +9,24 @@
 AR		= ar
 RANLIB		= ranlib
 DEPFLAGS	= -MMD -MP -MT "$*.o $*.E"
-INSTALL 	= /usr/bin/install -c
+INSTALL 	= ./install.sh -c
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_DATA 	= ${INSTALL} -m 644
 PYTHON		= /usr/bin/python
 PYTHON_BUILD_EXT= yes
-XSD_TOOL	= 
+XSD_TOOL	= xsd
 
 #
 # System-wide compilation flags including the oasys-dependent external
 # libraries.
 #
 SYS_CFLAGS          = -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64
-SYS_EXTLIB_CFLAGS   =  -I/opt/tcl/include -I/opt/db/include
-SYS_EXTLIB_LDFLAGS  =  -ldl -lm  -L/opt/tcl/lib -ltcl8.5 -lexpat -lz  -L/opt/db/lib -ldb-5.3 -lpthread 
+SYS_EXTLIB_CFLAGS   =  -I/opt/galileotcl//include -I/opt/galileodb//include
+SYS_EXTLIB_LDFLAGS  =  -ldl -lm  -L/opt/galileotcl//lib -ltcl8.5 -lbluetooth  -lexpat -lreadline  -lz  -L/opt/galileodb//lib -ldb-5.3 -lpthread 
 
 #
 # Library-specific compilation flags
-TCL_LDFLAGS     = -L/opt/tcl/lib -ltcl8.5
+TCL_LDFLAGS     = -L/opt/galileotcl//lib -ltcl8.5
 
 #
 # Input file processed by configure to generete System.make

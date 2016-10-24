@@ -21,6 +21,7 @@
 #include <oasys/io/IO.h>
 #include <oasys/tclcmd/TclCommand.h>
 #include <oasys/util/Time.h>
+#include <stdlib.h>
 
 #include "Bundle.h"
 #include "BundleActions.h"
@@ -983,6 +984,81 @@ BundleDaemon::handle_bundle_received(BundleReceivedEvent* event)
      * see if it needs to be delivered locally.
      */
     log_info_p("/dtn/bundle/protocol", "BundleDaemon::handle_bundle_received: end");
+    
+
+    const BlockInfo* bkinfo = NULL;
+    char monfile[255] = "/tmp/ramdisk0/dtnmonitor.txt";
+    FILE *monitor;
+    monitor = fopen(monfile, "a");
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    if (bundle->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+        BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        if(bpq_block->kind() != BPQBlock::KIND_QUERY)
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           char iwdbcmd[200];
+           iwdbcmd[0] = '\0';
+           strcat(iwdbcmd, "/tmp/ramdisk0/iwdb ");
+           strcat(iwdbcmd, bdid);
+           strcat(iwdbcmd, " ");
+           strcat(iwdbcmd, (char*)reqnameval);
+           strcat(iwdbcmd, " &");
+           system(iwdbcmd);
+           fprintf(monitor, "%d.%d     %s     %s     RECEIVED     RESPONSE\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+       }
+       else
+       {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s    RECEIVED    QUERY", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+       }
+
+    }
+	   
+    else if(bundle->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        if(bpq_block->kind() != BPQBlock::KIND_QUERY)
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           char iwdbcmd[200];
+           iwdbcmd[0] = '\0';
+           strcat(iwdbcmd, "/tmp/ramdisk0/iwdb ");
+           strcat(iwdbcmd, bdid);
+           strcat(iwdbcmd, " ");
+           strcat(iwdbcmd, (char*)reqnameval);
+           strcat(iwdbcmd, " &");
+           system(iwdbcmd);
+           fprintf(monitor, "%d.%d     %s     %s     RECEIVED     RESPONSE\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+        else
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s     RECEIVED     QUERY\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+
+    }
+    
+    fclose(monitor);
 }
 
 //----------------------------------------------------------------------
@@ -1193,6 +1269,62 @@ BundleDaemon::handle_bundle_transmitted(BundleTransmittedEvent* event)
         // forwarding are known to be unable to send bundles back to
         // this node
     }
+    const BlockInfo* bkinfo = NULL;
+    char monfile[255] = "/tmp/ramdisk0/dtnmonitor.txt";
+    FILE *monitor;
+    monitor = fopen(monfile, "a");
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    if (bundle->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+        BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        if(bpq_block->kind() != BPQBlock::KIND_QUERY)
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s     SENT     RESPONSE\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+        else
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s    SENT    QUERY\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+
+    }
+	   
+    else if(bundle->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+    {
+        bkinfo = bundle->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+        BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
+        if(bpq_block->kind() != BPQBlock::KIND_QUERY)
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s     SENT     RESPONSE\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+        else
+        {
+           u_int reqnamelen = bpq_block->query_len();
+           u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
+           reqnameval = bpq_block->query_val();
+           char bdid[10];
+           sprintf(bdid, "%d", bundle->bundleid());
+           fprintf(monitor, "%d.%d     %s     %s    SENT    QUERY\n", tv.tv_sec, tv.tv_usec, bdid, reqnameval);  
+        }
+ 
+    }
+    fclose(monitor);
 }
 
 //----------------------------------------------------------------------
@@ -1210,57 +1342,6 @@ BundleDaemon::handle_bundle_delivered(BundleDeliveredEvent* event)
     Bundle* bundle = event->bundleref_.object();
 
     log_warn("in bundle delivered, source:%s, dest:%s", bundle->source().c_str(), bundle->dest().c_str());
-
-    char logfile[255];
-    const BlockInfo* bkinfo = NULL;
-    if (bundle->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
-    {
-        bkinfo = bundle->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
-        BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
-        u_int reqnamelen = bpq_block->query_len();
-        u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
-        reqnameval = bpq_block->query_val();
-        logfile[0] = '\0';
-        strcat(logfile, "/home/dtn2/delivered/");
-        strcat(logfile, (char*)reqnameval);
-        log_warn("logfile:%s", logfile);
-        char copycomm[200], bundleid[10];
-        copycomm[0] = '\0';
-        strcat(copycomm, "cp /var/dtn/bundles/bundle_");
-        sprintf(bundleid, "%d", bundle->bundleid());
-        strcat(copycomm, bundleid);
-        strcat(copycomm, ".dat /home/dtn2/bpqrecv/");
-        strcat(copycomm, (char*)reqnameval);
-        log_warn("copycomm:%s", copycomm);
-        system(copycomm);
-        FILE *fp;
-        fp = fopen(logfile, "w");
-        fclose(fp);
-    }
-    else if(bundle->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
-    {
-        bkinfo = bundle->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
-	BPQBlock* bpq_block = dynamic_cast<BPQBlock *>(bkinfo->locals());
-        u_int reqnamelen = bpq_block->query_len();
-        u_char* reqnameval = (u_char*) malloc ( sizeof(u_char) * reqnamelen );
-        reqnameval = bpq_block->query_val();
-        logfile[0] = '\0';
-        strcat(logfile, "/home/dtn2/delivered/");
-        strcat(logfile, (char*)reqnameval);
-        log_warn("logfile:%s", logfile);
-        char copycomm[200], bundleid[10];
-        copycomm[0] = '\0';
-        strcat(copycomm, "cp /var/dtn/bundles/bundle_");
-        sprintf(bundleid, "%d", bundle->bundleid());
-        strcat(copycomm, bundleid);
-        strcat(copycomm, ".dat /home/dtn2/bpqrecv/");
-        strcat(copycomm, (char*)reqnameval);
-        log_warn("copycomm:%s", copycomm);
-        system(copycomm);
-        FILE *fp;
-        fp = fopen(logfile, "w");
-        fclose(fp);
-    }
 
         log_info("BUNDLE_DELIVERED id:%d (%zu bytes) -> regid %d (%s)",
              bundle->bundleid(), bundle->payload().length(),
@@ -2901,6 +2982,8 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
     		log_info_p("/dtn/daemon/bpq", "Query: %s answered completely",
     				(char*)bpq_block->query_val());
             event->daemon_only_ = true;
+            BundleRef back(bundle, "query already acknowledged");
+            delete_bundle(back);
         }
        //---------------------------------------------------------------
         else {
@@ -2909,7 +2992,7 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
                 reqnameval = bpq_block->query_val();
                 char publcomm[200];
                 publcomm[0] = '\0';
-                strcat(publcomm, "/home/dtn2/publ.py ");
+                strcat(publcomm, "/tmp/ramdisk0/publ.py ");
                 strcat(publcomm, (char*)reqnameval);
                 strcat(publcomm, " &");
                 system(publcomm);
@@ -2921,12 +3004,9 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
                bpq_block->kind() == BPQBlock::KIND_PUBLISH) {
         if(bpq_block->kind() == BPQBlock::KIND_RESPONSE)
         {
-        	log_warn("pre check self responded bundle");
-                log_warn("source: %s, dest:%s", bundle->source().c_str(), bundle->dest().c_str());
                 if(bundle->source().equals(bundle->dest()))
                 {
                 	local_bundle = true;
-                        log_warn("check self responded bundle");
                 }
         }
         
@@ -2959,45 +3039,43 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
     		
                 oasys::ScopeLock laq(pending_bundles_->lock(), 
                        "Answer query already existed");
-                log_warn("before iter checking");
                 BundleList::iterator iter;
                 Bundle* matchable[200];
                 int macont = 0;
+                char reqname[200], respname[200];                  
+                strcpy(respname, (char*)bpq_block->query_val());			 
+
 		for (iter = pending_bundles_->begin();
          		iter != pending_bundles_->end();
          		++iter)
 		{
-   			log_warn("in iter checking");
                         Bundle* ck = *iter;
                         const BlockInfo* bk = NULL;
                         if (ck->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
    			{
-      				log_warn("in condition checking");
                                 bk = ck->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
 	  			BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bk->locals());
-                                log_warn("before query checking %d %d", ck->bundleid(), bpqbk->kind());
 	  			if(bpqbk->kind() == BPQBlock::KIND_QUERY)
 	  			{
+                                   strcpy(reqname, (char*)bpqbk->query_val());                                
+                                   if(strcmp(respname, reqname) == 0)
+                                   {
 					matchable[macont++] = ck;
-                                        log_warn("current answering query %d %d", ck->bundleid(), bpqbk->kind());
-                                        //bpq_cache()->answer_query(ck, bpqbk);
-                                        log_warn("current answered query %d %d", ck->bundleid(), bpqbk->kind());
-                                        
+                                   }
 	  			}
 			}
                         else if(ck->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
                         {
-                                log_warn("in condition checking");
                                 bk = ck->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
 	  			BPQBlock* bpqbk = dynamic_cast<BPQBlock *>(bk->locals());
-                                log_warn("before query checking %d %d", ck->bundleid(), bpqbk->kind());
 	  			if(bpqbk->kind() == BPQBlock::KIND_QUERY)
 	  			{
+                                   strcpy(reqname, (char*)bpqbk->query_val());                                
+                                   if(strcmp(respname, reqname) == 0)
+                                   {
 					matchable[macont++] = ck;
-                                        log_warn("current answering query %d %d", ck->bundleid(), bpqbk->kind());
-                                        //bpq_cache()->answer_query(ck, bpqbk);
-                                        log_warn("current answered query %d %d", ck->bundleid(), bpqbk->kind());
-				}
+                                   }
+	  			}
                         }
 	  		else
 	  		{
@@ -3005,39 +3083,40 @@ BundleDaemon::handle_bpq_block(Bundle* bundle, BundleReceivedEvent* event)
 	  		}
    		}
                 
-                for (int uu=0; uu<macont; uu++) {
+                for (int uu=0; uu<macont; uu++)
+                {
                    Bundle* at = matchable[uu];
                    if (at->recv_blocks().has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
-   			{
-			        const BlockInfo* bkt = NULL;
-                                bkt = at->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
-	  			BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
-                        	bpq_cache()->answer_query(at, bpqbkt);
-                                BundleRef back(at, "query already acknowledged");
-                                delete_bundle(back);
-                                
-                                
-                                        
-			}
-                        else if(at->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
-                        {
-                                const BlockInfo* bkt = NULL;
-                                bkt = at->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
-	  			BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
-                                bpq_cache()->answer_query(at, bpqbkt);
-                                BundleRef back(at, "query already acknowledged");
-                                delete_bundle(back);
-                        }
+   		   {
+                      const BlockInfo* bkt = NULL;
+                      bkt = at->recv_blocks().find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  	      BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
+                      
+                      bpq_cache()->answer_query(at, bpqbkt);
+                      BundleRef back(at, "query already acknowledged");
+                      delete_bundle(back);
+                      
+		   }
+                   else if(at->api_blocks()->has_block(BundleProtocol::QUERY_EXTENSION_BLOCK))
+                   {
+                      const BlockInfo* bkt = NULL;
+                      bkt = at->api_blocks()->find_block(BundleProtocol::QUERY_EXTENSION_BLOCK);
+	  	      BPQBlock* bpqbkt = dynamic_cast<BPQBlock *>(bkt->locals());
+                   
+                      bpq_cache()->answer_query(at, bpqbkt);
+                      BundleRef back(at, "query already acknowledged");
+                      delete_bundle(back);
+
+                   }
+
+
                 }
                 laq.unlock();
-
-
-                }
                 //------------------------------------------------------------------
                 
                 //------------------------------------------------------------------
     	}
-        
+    }        
         
 
     } else if (bpq_block->kind() == BPQBlock::KIND_RESPONSE_DO_NOT_CACHE_FRAG) {

@@ -28,9 +28,9 @@ srcdir		= .
 #
 # Oasys directory substitutions
 #
-OASYS_INCDIR   = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/include
-OASYS_LIBDIR   = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/lib
-OASYS_ETCDIR   = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/share
+OASYS_INCDIR   = /home/root/DTN2/oasys/include
+OASYS_LIBDIR   = /home/root/DTN2/oasys/lib
+OASYS_ETCDIR   = /home/root/DTN2/oasys/share
 OASYS_VERSION  = 1.6.0
 
 #
@@ -43,7 +43,7 @@ include $(BUILDDIR)/System.make
 #
 CC		= gcc
 CXX		= g++
-DEBUG 		= -g -fno-inline
+DEBUG 		= -DNDEBUG
 DEFS            = -DHAVE_CONFIG_H
 DEPFLAGS	= -MMD -MP -MT "$*.o $*.E"
 OPTIMIZE	= 
@@ -53,8 +53,8 @@ SHLIBS		= yes
 SHLIB_EXT	= so
 LDFLAGS_SHLIB   = -shared -fPIC -DPIC
 EXTLIB_CFLAGS   =  $(SYS_EXTLIB_CFLAGS)
-EXTLIB_LDFLAGS  =  $(SYS_EXTLIB_LDFLAGS)
-EXTRA_CFLAGS	= 
+EXTLIB_LDFLAGS  =  -ldns_sd  $(SYS_EXTLIB_LDFLAGS)
+EXTRA_CFLAGS	= -fpermissive 
 EXTRA_CXXFLAGS  = 
 EXTRA_LDFLAGS	= 
 INCFLAGS	= -I$(BUILDDIR) -I$(SRCDIR) -I$(OASYS_INCDIR) -I$(OASYS_INCDIR)/oasys/ext -I$(SRCDIR)/servlib
@@ -69,9 +69,9 @@ CXXFLAGS_NOWARN	= $(CFLAGS_NOWARN) $(EXTRA_CXXFLAGS)
 CXXFLAGS        = $(CFLAGS) $(EXTRA_CXXFLAGS)
 LDFLAGS         = -L. $(EXTRA_LDFLAGS)
 
-OASYS_LDFLAGS        = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/lib/liboasys-1.6.0.a
-OASYS_LDFLAGS_STATIC = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/lib/liboasys-1.6.0.a
-OASYS_COMPAT_LDFLAGS = /home/dtn2/dtn2/NSSDTN2/DTN2/oasys/lib/liboasyscompat-1.6.0.a
+OASYS_LDFLAGS        = /home/root/DTN2/oasys/lib/liboasys-1.6.0.a
+OASYS_LDFLAGS_STATIC = /home/root/DTN2/oasys/lib/liboasys-1.6.0.a
+OASYS_COMPAT_LDFLAGS = /home/root/DTN2/oasys/lib/liboasyscompat-1.6.0.a
 
 #
 # Add a phony rule to make sure this isn't included before the default

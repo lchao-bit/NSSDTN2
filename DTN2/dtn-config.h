@@ -20,7 +20,7 @@
 /* #undef EXTERNAL_DP_ENABLED */
 
 /* Define to 1 if you have the <dns_sd.h> header file. */
-/* #undef HAVE_DNS_SD_H */
+#define HAVE_DNS_SD_H 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -68,10 +68,10 @@
 /* #undef NORM_ENABLED */
 
 /* whether bonjour support is enabled */
-/* #undef OASYS_BONJOUR_ENABLED */
+#define OASYS_BONJOUR_ENABLED 1
 
 /* whether oasys lock debugging is enabled */
-#define OASYS_DEBUG_LOCKING_ENABLED 1
+/* #undef OASYS_DEBUG_LOCKING_ENABLED */
 
 /* whether oasys memory debugging is enabled */
 /* #undef OASYS_DEBUG_MEMORY_ENABLED */
